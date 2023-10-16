@@ -1,3 +1,5 @@
+import { sort } from "fast-sort";
+import Link from "next/link";
 import React from "react";
 
 interface User {
@@ -6,7 +8,11 @@ interface User {
   email: string;
 }
 
-const UserTable = async () => {
+interface Props {
+  sortOrder: string;
+}
+
+const UserTable = async ({ sortOrder }: Props) => {
   // caching behavior is only implemented in fetch function not in 3rd party librery like axios.
   const res = await fetch("https://jsonplaceholder.typicode.com/users"); // it does cache the data, next time it will get from cahe memory so it also render as a static
 
@@ -19,17 +25,26 @@ const UserTable = async () => {
   // });
   const users: User[] = await res.json();
 
+  console.log("sortOrder", sortOrder);
+  const sortedUsers = sort(users).asc(
+    (user) => user[sortOrder as keyof typeof user]
+  );
+
   return (
     <>
       <table className="table table-bordered">
         <thead>
           <tr>
-            <th>Name</th>
-            <th>Email</th>
+            <th>
+              <Link href="/users?sortOrder=name">Name</Link>
+            </th>
+            <th>
+              <Link href="/users?sortOrder=email">Email</Link>
+            </th>
           </tr>
         </thead>
         <tbody>
-          {users.map((user) => (
+          {sortedUsers.map((user) => (
             <tr key={user.id}>
               <td>{user.name}</td>
               <td>{user.email}</td>
