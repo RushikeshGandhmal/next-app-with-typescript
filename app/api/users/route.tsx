@@ -15,5 +15,15 @@ export async function POST(request: NextRequest) {
   if (!validation.success) {
     return NextResponse.json(validation.error.errors, { status: 400 });
   }
-  return NextResponse.json({ id: 1, name: body.name }, { status: 201 });
+  return NextResponse.json(
+    {
+      id: 1,
+      firstName: body.body.firstName,
+      lastName: body.body.lastName,
+      password: body.body.password,
+      passwordConfirmation: body.body.passwordConfirmation,
+      email: body.body.email,
+    },
+    { status: 201 }
+  );
 }
