@@ -40,6 +40,7 @@ export interface UserInput {
   firstName: string;
   lastName: string;
   password: string;
+  passwordConfirmation: string;
 }
 
 export default createUserSchema;

@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import schema from "./schema";
+import schema, { UserInput } from "./schema";
 
 export function GET(request: NextRequest) {
   // If u remove request param nextjs will cache the result
@@ -10,7 +10,7 @@ export function GET(request: NextRequest) {
 }
 
 export async function POST(request: NextRequest) {
-  const body = await request.json();
+  const body: UserInput = await request.json();
   const validation = schema.safeParse(body);
   if (!validation.success) {
     return NextResponse.json(validation.error.errors, { status: 400 });
@@ -18,11 +18,11 @@ export async function POST(request: NextRequest) {
   return NextResponse.json(
     {
       id: 1,
-      firstName: body.body.firstName,
-      lastName: body.body.lastName,
-      password: body.body.password,
-      passwordConfirmation: body.body.passwordConfirmation,
-      email: body.body.email,
+      firstName: body.firstName,
+      lastName: body.lastName,
+      password: body.password,
+      passwordConfirmation: body.passwordConfirmation,
+      email: body.email,
     },
     { status: 201 }
   );
