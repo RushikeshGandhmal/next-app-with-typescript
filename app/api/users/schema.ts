@@ -4,12 +4,14 @@ const createUserSchema = object({
   body: object({
     firstName: string({
       required_error: "First name is required",
-    }),
+    })
+      .trim()
+      .min(3),
     lastName: string({
       required_error: "Last name is required",
     })
       .trim()
-      .min(1),
+      .min(3),
     password: string({
       required_error: "Password is required",
     })

@@ -10,14 +10,14 @@ export function GET(request: NextRequest) {
 }
 
 export async function POST(request: NextRequest) {
-  const body: UserInput = await request.json();
-  const validation = schema.safeParse(body);
+  const { body } = await request.json();
+  const validation = schema.safeParse({ body: body });
   if (!validation.success) {
     return NextResponse.json(validation.error.errors, { status: 400 });
   }
   return NextResponse.json(
     {
-      id: 1,
+      id: 21,
       firstName: body.firstName,
       lastName: body.lastName,
       password: body.password,
