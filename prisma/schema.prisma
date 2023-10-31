@@ -11,10 +11,13 @@ datasource db {
 }
 
 model User {
-  id           Int      @id @default(autoincrement())
-  email        String   @unique
-  name         String
-  followers    Int      @default(0)
-  isActive     Boolean  @default(true)
-  registeredAt DateTime @default(now())
+  id                   Int      @id @default(autoincrement())
+  firstName            String
+  lastName             String
+  email                String   @unique
+  password             String
+  passwordConfirmation String
+  followers            Int      @default(0)
+  isActive             Boolean  @default(true)
+  registeredAt         DateTime @default(now())
 }

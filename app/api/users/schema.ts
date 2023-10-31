@@ -38,11 +38,14 @@ export type CreateUserInput = Omit<
 >;
 
 export interface UserInput {
-  email: string;
   firstName: string;
   lastName: string;
+  email: string;
   password: string;
   passwordConfirmation: string;
+  followers: number;
+  isActive: boolean;
+  registeredAt: Date;
 }
 
 export default createUserSchema;
