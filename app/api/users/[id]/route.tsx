@@ -19,17 +19,60 @@ export async function GET(
 
 export async function PUT(
   request: NextRequest,
-  { params }: { params: { id: number } }
+  { params }: { params: { id: string } }
 ) {
-  const body = await request.json();
-  const validation = schema.safeParse(body);
+  const { body } = await request.json();
+  const validation = schema.safeParse({ body: body });
   if (!validation.success) {
     return NextResponse.json(validation.error.errors, { status: 400 });
   }
-  if (params.id > 10) {
-    return NextResponse.json({ error: "User not found." }, { status: 404 });
+  const existUser = await prisma.user.findUnique({
+    where: { id: parseInt(params.id) },
+  });
+  if (!existUser) {
+    return NextResponse.json(
+      { error: `User with ID ${params.id} doesn't exists!` },
+      { status: 404 }
+    );
   }
-  return NextResponse.json({ id: 1, name: body.name }, { status: 200 });
+  const updatedEmail = body.email;
+
+  // Check if the email being updated to is the same as the current one
+  if (existUser.email !== updatedEmail) {
+    // Check if the updated email already exists in the database
+    const existingUserWithUpdatedEmail = await prisma.user.findUnique({
+      where: { email: updatedEmail },
+    });
+
+    // If another user already has the updated email, handle it
+    if (existingUserWithUpdatedEmail) {
+      return NextResponse.json(
+        {
+          error: `User with email ${body.email} already exist!`,
+        },
+        { status: 409 }
+      );
+    }
+  }
+  const updatedUser = await prisma.user.update({
+    where: {
+      id: existUser.id,
+    },
+    data: {
+      firstName: body.firstName,
+      lastName: body.lastName,
+      email: updatedEmail,
+      password: body.password,
+      passwordConfirmation: body.passwordConfirmation,
+      followers: body?.followers ? body.followers : existUser.followers,
+      isActive: body?.isActive ? body.isActive : existUser.isActive,
+      registeredAt: body?.registeredAt
+        ? body.registeredAt
+        : existUser.registeredAt,
+    },
+  });
+
+  return NextResponse.json(updatedUser, { status: 200 });
 }
 
 export function DELETE(
