@@ -1,12 +1,11 @@
 import { NextRequest, NextResponse } from "next/server";
 import schema, { UserInput } from "./schema";
+import prisma from "@/prisma/client";
 
-export function GET(request: NextRequest) {
+export async function GET(request: NextRequest) {
   // If u remove request param nextjs will cache the result
-  return NextResponse.json([
-    { id: 1, name: "Rushi" },
-    { id: 2, name: "Rethink" },
-  ]);
+  const users = await prisma.user.findMany();
+  return NextResponse.json(users);
 }
 
 export async function POST(request: NextRequest) {
