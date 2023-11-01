@@ -21,6 +21,13 @@ const UploadPage = () => {
           const info = result.info as CloudinaryResult;
           setPublicId(info.public_id);
         }}
+        options={{
+          sources: ["local"],
+          multiple: false,
+          maxFileSize: 2,
+          maxFiles: 5,
+          styles: {},
+        }}
       >
         {({ open }) => (
           <button className="btn btn-primary mt-4" onClick={() => open()}>
