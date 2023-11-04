@@ -25,7 +25,6 @@ const UserTable = async ({ sortOrder }: Props) => {
   // });
   const users: User[] = await res.json();
 
-  console.log("sortOrder", sortOrder);
   const sortedUsers = sort(users).asc(
     (user) => user[sortOrder as keyof typeof user]
   );
