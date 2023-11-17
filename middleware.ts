@@ -7,6 +7,7 @@ export { default } from "next-auth/middleware";
 // }
 
 // If we want to execute middleware on specific path/api
+
 export const config = {
   // *: zero or more
   // +: one or more
