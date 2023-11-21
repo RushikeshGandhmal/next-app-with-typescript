@@ -16,7 +16,7 @@ export default async function Home() {
         src="https://bit.ly/react-cover"
         alt="react image"
         fill
-        className="object-cover"
+        className="object-contain"
         sizes="(max-width: 480px) 100vw (max-width: 786px) 50vw, 33vw"
         quality={100}
         priority
