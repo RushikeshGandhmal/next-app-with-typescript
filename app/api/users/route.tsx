@@ -11,36 +11,36 @@ export async function GET(request: NextRequest) {
   return NextResponse.json(users);
 }
 
-export async function POST(request: NextRequest) {
-  const { body } = await request.json();
-  const validation = schema.safeParse({ body: body });
-  if (!validation.success) {
-    return NextResponse.json(validation.error.errors, { status: 400 });
-  }
+// export async function POST(request: NextRequest) {
+//   const { body } = await request.json();
+//   const validation = schema.safeParse({ body: body });
+//   if (!validation.success) {
+//     return NextResponse.json(validation.error.errors, { status: 400 });
+//   }
 
-  const isUserExist = await prisma.user.findUnique({
-    where: {
-      email: body.email,
-    },
-  });
-  if (isUserExist) {
-    return NextResponse.json(
-      {
-        error: `User with email ${body.email} already exist!`,
-      },
-      { status: 409 }
-    );
-  }
+//   const isUserExist = await prisma.user.findUnique({
+//     where: {
+//       email: body.email,
+//     },
+//   });
+//   if (isUserExist) {
+//     return NextResponse.json(
+//       {
+//         error: `User with email ${body.email} already exist!`,
+//       },
+//       { status: 409 }
+//     );
+//   }
 
-  const user = await prisma.user.create({
-    data: {
-      firstName: body.firstName,
-      lastName: body.lastName,
-      email: body.email,
-      password: body.password,
-      passwordConfirmation: body.passwordConfirmation,
-    },
-  });
+//   const user = await prisma.user.create({
+//     data: {
+//       firstName: body.firstName,
+//       lastName: body.lastName,
+//       email: body.email,
+//       password: body.password,
+//       passwordConfirmation: body.passwordConfirmation,
+//     },
+//   });
 
-  return NextResponse.json(user, { status: 201 });
-}
+//   return NextResponse.json(user, { status: 201 });
+// }
