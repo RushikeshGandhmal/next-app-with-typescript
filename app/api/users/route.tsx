@@ -4,11 +4,11 @@ import prisma from "@/prisma/client";
 
 export async function GET(request: NextRequest) {
   // If u remove request param nextjs will cache the result
-  const users = await prisma.user.findMany();
-  if (users.length < 1) {
-    return NextResponse.json({ error: "No Records Found" }, { status: 404 });
-  }
-  return NextResponse.json(users);
+  // const users = await prisma.user.findMany();
+  // if (users.length < 1) {
+  //   return NextResponse.json({ error: "No Records Found" }, { status: 404 });
+  // }
+  // return NextResponse.json(users);
 }
 
 // export async function POST(request: NextRequest) {
