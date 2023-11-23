@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
-import schema, { UserInput } from "./schema";
-import prisma from "@/prisma/client";
+// import schema, { UserInput } from "./schema";
+// import prisma from "@/prisma/client";
 
 export async function GET(request: NextRequest) {
   // If u remove request param nextjs will cache the result
@@ -8,7 +8,7 @@ export async function GET(request: NextRequest) {
   // if (users.length < 1) {
   //   return NextResponse.json({ error: "No Records Found" }, { status: 404 });
   // }
-  // return NextResponse.json(users);
+  return NextResponse.json({});
 }
 
 // export async function POST(request: NextRequest) {
